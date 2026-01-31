@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ergomotion PT Sales Explorer 2024-2026</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <div>
+        <p class="eyebrow">Ergomotion PT - Sales Analysis</p>
+        <h1>Ergomotion PT Sales Explorer 2024-2026</h1>
+        <p class="subtitle">Interactive view of 2024 actuals, 2025 gross/net and forecast, and 2026 forecast (EUR).</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="tabs-bar">
+      <button class="tab active" data-target="board-view">Interactive View</button>
+    </div>
+
+    <div class="note note-inline">
+      <div class="note-title">Data Normalization</div>
+      <div class="note-body">TRADING HOUSE ASKONA LLC + A Trade LLC -> <strong>ASKONA</strong><br />Bed Quarter Furniture Trading + Bed Quarter Company for Trading -> <strong>BED QUARTER</strong></div>
+    </div>
+    <section class="filters">
+      <div class="filter">
+        <label for="search">Search</label>
+        <input id="search" type="text" placeholder="Customer, region, category" />
+      </div>
+      <div class="filter">
+        <label for="region">Region</label>
+        <select id="region"></select>
+      </div>
+      <div class="filter">
+        <label for="category">Customer Category</label>
+        <select id="category"></select>
+      </div>
+      <div class="filter">
+        <label for="customer">Customer (Normalized)</label>
+        <select id="customer"></select>
+      </div>
+      <div class="filter">
+        <label for="metric">Primary Metric</label>
+        <select id="metric"></select>
+      </div>
+      <div class="filter">
+        <button id="reset" class="btn">Reset filters</button>
+      </div>
+    </section>
+
+    <section class="kpis" id="kpis"></section>
+
+    <section id="board-view" class="view">
+      <section class="section-title">Interactive View</section>
+      <section class="charts board">
+        <div class="chart-card">
+          <h3>Top Customers by Selected Metric</h3>
+          <div id="chart-top-static"></div>
+        </div>
+        <div class="chart-card">
+          <h3>Totals Across Metrics</h3>
+          <div id="chart-totals-static"></div>
+        </div>
+        <div class="chart-card">
+          <h3>Total Sales and YoY Percent Change</h3>
+          <div id="chart-yoy-static"></div>
+        </div>
+        <div class="chart-card">
+          <h3>2025 Net Sales Distribution (Customer Category)</h3>
+          <div id="chart-net-dist-static"></div>
+        </div>
+        <div class="chart-card">
+          <h3>Regional Sales Comparison</h3>
+          <div id="chart-region-bars-static"></div>
+        </div>
+        <div class="chart-card">
+          <h3>Category Sales Comparison</h3>
+          <div id="chart-category-bars-static"></div>
+        </div>
+        <div class="chart-card">
+          <h3>Category Mix by Year Type</h3>
+          <div id="chart-category-stack-static"></div>
+        </div>
+        <div class="chart-card">
+          <h3>Category Mix Table (Percent of Sales)</h3>
+          <div class="chart-table">
+            <table id="category-mix-table">
+              <thead></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="chart-card">
+          <h3>Top 10 Increases in 2025 Gross vs 2024 Gross</h3>
+          <div id="chart-inc-gross-static"></div>
+        </div>
+        <div class="chart-card">
+          <h3>Top 10 Decreases in 2025 Gross vs 2024 Gross</h3>
+          <div id="chart-dec-gross-static"></div>
+        </div>
+        <div class="chart-card">
+          <h3>Top 10 Customers Beating 2025 Forecast</h3>
+          <div id="chart-beat-forecast-static"></div>
+        </div>
+        <div class="chart-card">
+          <h3>Top 10 Customers Missing 2025 Forecast</h3>
+          <div id="chart-miss-forecast-static"></div>
+        </div>
+        <div class="chart-card">
+          <h3>Top 10 2026 Forecast Increases vs 2025 Gross</h3>
+          <div id="chart-inc-2026-static"></div>
+        </div>
+        <div class="chart-card">
+          <h3>Top 10 2026 Forecast Decrease vs 2025 Gross</h3>
+          <div id="chart-dec-2026-static"></div>
+        </div>
+      </section>
+    </section>
+
+    <section class="table-section">
+      <div class="table-header">
+        <h3>Raw Table (Filtered)</h3>
+        <div class="table-meta" id="table-meta"></div>
+      </div>
+      <div class="table-wrap">
+        <table id="data-table">
+          <thead></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
