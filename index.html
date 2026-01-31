@@ -7,7 +7,19 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="hero">
+  <div id="lock-screen">
+    <div class="lock-card">
+      <h2>Ergomotion PT Sales Explorer</h2>
+      <p>Enter password to view dashboard data.</p>
+      <form id="unlock-form">
+        <input type="password" id="password-input" placeholder="Password" autocomplete="current-password" required />
+        <button type="submit" class="btn" id="unlock-btn">Unlock</button>
+      </form>
+      <p id="unlock-error" class="error-msg" style="display:none;"></p>
+    </div>
+  </div>
+
+  <header class="hero dashboard-hidden">
     <div class="hero-inner">
       <div>
         <p class="eyebrow">Ergomotion PT - Sales Analysis</p>
@@ -17,7 +29,7 @@
     </div>
   </header>
 
-  <main class="container">
+  <main class="container dashboard-hidden">
     <div class="tabs-bar">
       <button class="tab active" data-target="board-view">Interactive View</button>
     </div>
@@ -136,7 +148,37 @@
   </main>
 
   <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
-  <script src="data.js"></script>
+  <script src="encrypted-data.js"></script>
+  <script src="crypto.js"></script>
   <script src="app.js"></script>
+  <script>
+    document.getElementById("unlock-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById("unlock-btn");
+      const errEl = document.getElementById("unlock-error");
+      const password = document.getElementById("password-input").value;
+
+      btn.disabled = true;
+      btn.textContent = "Decrypting\u2026";
+      errEl.style.display = "none";
+
+      try {
+        const data = await decryptData(password);
+        window.DATA = data;
+        initDashboard();
+
+        document.querySelectorAll(".dashboard-hidden").forEach((el) => el.classList.remove("dashboard-hidden"));
+        const lockScreen = document.getElementById("lock-screen");
+        lockScreen.classList.add("fade-out");
+        setTimeout(() => lockScreen.remove(), 500);
+      } catch (err) {
+        errEl.textContent = "Incorrect password. Please try again.";
+        errEl.style.display = "block";
+        btn.disabled = false;
+        btn.textContent = "Unlock";
+        document.getElementById("password-input").select();
+      }
+    });
+  </script>
 </body>
 </html>

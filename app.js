@@ -61,10 +61,7 @@ const state = {
   sortDir: "desc"
 };
 
-const sourceRecords = (DATA.records || []).map((r, idx) => ({
-  id: idx + 1,
-  ...r
-}));
+let sourceRecords = [];
 
 function uniqueSorted(values) {
   return Array.from(new Set(values.filter(Boolean))).sort((a, b) => a.localeCompare(b));
@@ -644,6 +641,12 @@ function bindEvents() {
   });
 }
 
-initFilters();
-bindEvents();
-render();
+function initDashboard() {
+  sourceRecords = (DATA.records || []).map((r, idx) => ({
+    id: idx + 1,
+    ...r
+  }));
+  initFilters();
+  bindEvents();
+  render();
+}
