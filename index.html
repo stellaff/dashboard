@@ -24,21 +24,22 @@
       <div>
         <p class="eyebrow">Ergomotion PT - Sales Analysis</p>
         <h1>Ergomotion PT Sales Explorer 2024-2026</h1>
-        <p class="subtitle">Interactive view of 2024 actuals, 2025 gross/net and forecast, and 2026 forecast (EUR).</p>
+        <p class="subtitle">Interactive view of 2025 gross/net Sales and forecast and 2026 forecast (EUR).</p>
       </div>
     </div>
   </header>
 
   <main class="container dashboard-hidden">
     <div class="tabs-bar">
-      <button class="tab active" data-target="board-view">Interactive View</button>
+      <button class="tab active" data-target="board-view">Yearly Summary</button>
+      <button class="tab" data-target="monthly-view">2026 Monthly Actual Sales</button>
     </div>
 
-    <div class="note note-inline">
+    <div class="note note-inline" id="yearly-note">
       <div class="note-title">Data Normalization</div>
       <div class="note-body">TRADING HOUSE ASKONA LLC + A Trade LLC -> <strong>ASKONA</strong><br />Bed Quarter Furniture Trading + Bed Quarter Company for Trading -> <strong>BED QUARTER</strong></div>
     </div>
-    <section class="filters">
+    <section class="filters" id="yearly-filters">
       <div class="filter">
         <label for="search">Search</label>
         <input id="search" type="text" placeholder="Customer, region, category" />
@@ -67,7 +68,7 @@
     <section class="kpis" id="kpis"></section>
 
     <section id="board-view" class="view">
-      <section class="section-title">Interactive View</section>
+      <section class="section-title">Yearly Summary</section>
       <section class="charts board">
         <div class="chart-card">
           <h3>Top Customers by Selected Metric</h3>
@@ -133,7 +134,136 @@
       </section>
     </section>
 
-    <section class="table-section">
+    <section id="monthly-view" class="view hidden">
+      <section class="section-title">2026 Monthly Actual Sales</section>
+      <section class="filters monthly-filters">
+        <div class="filter">
+          <label for="monthly-month">Month</label>
+          <select id="monthly-month"></select>
+        </div>
+        <div class="filter">
+          <label for="monthly-region">Region</label>
+          <select id="monthly-region"></select>
+        </div>
+        <div class="filter">
+          <label for="monthly-category">Customer Category</label>
+          <select id="monthly-category"></select>
+        </div>
+        <div class="filter">
+          <label for="monthly-customer">Customer (Normalized)</label>
+          <select id="monthly-customer"></select>
+        </div>
+        <div class="filter">
+          <label for="monthly-metric">Primary Metric</label>
+          <select id="monthly-metric"></select>
+        </div>
+      </section>
+
+      <section class="kpis" id="monthly-kpis"></section>
+
+      <section class="charts board">
+        <div class="chart-card">
+          <h3>Current Month Sales by Customer Category</h3>
+          <div id="chart-monthly-gross-net-category"></div>
+        </div>
+        <div class="chart-card">
+          <h3>Year-to-Date Sales by Customer Category</h3>
+          <div id="chart-monthly-gross-net-region"></div>
+        </div>
+        <div class="chart-card">
+          <h3>Top Customer (2026 Current Month Sales)</h3>
+          <div id="chart-monthly-top-customer"></div>
+        </div>
+        <div class="chart-card">
+          <h3>Top Customer (2026 YTD Sales)</h3>
+          <div id="chart-monthly-top-customer-ytd"></div>
+        </div>
+        <div class="chart-card">
+          <h3>2025 vs 2026 vs 2026 Forecast</h3>
+          <div id="chart-monthly-compare"></div>
+        </div>
+        <div class="chart-card">
+          <h3>2025 vs 2026 vs 2026 Forecast (YTD)</h3>
+          <div id="chart-monthly-compare-ytd"></div>
+        </div>
+        <div class="chart-card">
+          <h3>Regional Sales Comparison</h3>
+          <div id="chart-monthly-region-comp"></div>
+        </div>
+        <div class="chart-card">
+          <h3>Regional Sales Comparison (YTD)</h3>
+          <div id="chart-monthly-region-comp-ytd"></div>
+        </div>
+        <div class="chart-card">
+          <h3>Category Sales Comparison</h3>
+          <div id="chart-monthly-category-comp"></div>
+        </div>
+        <div class="chart-card">
+          <h3>Category Sales Comparison (YTD)</h3>
+          <div id="chart-monthly-category-comp-ytd"></div>
+        </div>
+        <div class="chart-card">
+          <h3>Category Mix by Year Type (YTD)</h3>
+          <div id="chart-monthly-category-mix-ytd"></div>
+        </div>
+        <div class="chart-card table-card">
+          <div class="table-header">
+            <h3>Category Mix Table (Percent of Sales) (YTD)</h3>
+            <div class="table-meta" id="monthly-category-mix-table-meta"></div>
+          </div>
+          <div class="table-wrap">
+            <table id="monthly-category-mix-table">
+              <thead></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="chart-card">
+          <h3>Top 10 Customer Increase 2025 (YTD)</h3>
+          <div id="chart-monthly-2025-inc-ytd"></div>
+        </div>
+        <div class="chart-card">
+          <h3>Top 10 Customer Decrease 2025 (YTD)</h3>
+          <div id="chart-monthly-2025-dec-ytd"></div>
+        </div>
+        <div class="chart-card">
+          <h3>Top 10 Customers Beating 2026 Forecast (YTD)</h3>
+          <div id="chart-monthly-2026-beat-ytd"></div>
+        </div>
+        <div class="chart-card">
+          <h3>Top 10 Customers Missing 2026 Forecast (YTD)</h3>
+          <div id="chart-monthly-2026-miss-ytd"></div>
+        </div>
+      </section>
+
+      <section class="table-section" id="monthly-table-section">
+        <div class="table-header">
+          <h3>Monthly Sales Table (Filtered)</h3>
+          <div class="table-meta" id="monthly-table-meta"></div>
+        </div>
+        <div class="table-wrap">
+          <table id="monthly-table">
+            <thead></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="table-section" id="monthly-ytd-table-section">
+        <div class="table-header">
+          <h3>Year-to-Date Sales Table (Filtered)</h3>
+          <div class="table-meta" id="monthly-ytd-table-meta"></div>
+        </div>
+        <div class="table-wrap">
+          <table id="monthly-ytd-table">
+            <thead></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+
+    <section class="table-section" id="yearly-table-section">
       <div class="table-header">
         <h3>Raw Table (Filtered)</h3>
         <div class="table-meta" id="table-meta"></div>
@@ -150,6 +280,8 @@
   <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
   <script src="encrypted-data.js"></script>
   <script src="crypto.js"></script>
+  <script src="customer-map.js"></script>
+  <script src="monthly-data.js"></script>
   <script src="app.js"></script>
   <script>
     document.getElementById("unlock-form").addEventListener("submit", async (e) => {

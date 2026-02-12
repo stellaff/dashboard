@@ -115,6 +115,11 @@ h1 {
   align-items: end;
 }
 
+.monthly-filters {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  margin-top: 8px;
+}
+
 .filter {
   display: flex;
   flex-direction: column;
@@ -214,6 +219,11 @@ input, select, button {
   min-height: 420px;
 }
 
+.chart-card.table-card > div {
+  height: auto;
+  min-height: 0;
+}
+
 .table-section {
   background: var(--card);
   padding: 16px;
@@ -244,6 +254,28 @@ input, select, button {
   border-bottom: 1px solid var(--line);
   text-align: left;
   white-space: nowrap;
+}
+
+#monthly-table, #monthly-ytd-table, #monthly-category-mix-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+#monthly-table th, #monthly-table td,
+#monthly-ytd-table th, #monthly-ytd-table td,
+#monthly-category-mix-table th, #monthly-category-mix-table td {
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  text-align: left;
+  white-space: nowrap;
+}
+
+#monthly-table th, #monthly-ytd-table th, #monthly-category-mix-table th {
+  position: sticky;
+  top: 0;
+  background: #fff7ee;
+  z-index: 1;
 }
 
 #data-table th {
