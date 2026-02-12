@@ -280,8 +280,6 @@
   <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
   <script src="encrypted-data.js"></script>
   <script src="crypto.js"></script>
-  <script src="customer-map.js"></script>
-  <script src="monthly-data.js"></script>
   <script src="app.js"></script>
   <script>
     document.getElementById("unlock-form").addEventListener("submit", async (e) => {
@@ -296,7 +294,9 @@
 
       try {
         const data = await decryptData(password);
-        window.DATA = data;
+        window.DATA = { records: data.records };
+        window.MONTHLY_DATA = data.monthlyData;
+        window.CUSTOMER_MAP = data.customerMap;
         initDashboard();
 
         document.querySelectorAll(".dashboard-hidden").forEach((el) => el.classList.remove("dashboard-hidden"));

@@ -1,1 +1,7 @@
 data.js
+monthly-data.js
+customer-map.js
+*.xlsx
+*.swp
+*.pen
+.DS_Store

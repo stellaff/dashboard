@@ -267,7 +267,7 @@ function renderCharts(records, suffix, interactive) {
   }], {
     height: 420,
     margin: { t: 10, l: 220, r: 120, b: 40 },
-    xaxis: { title: "EUR", tickformat: ",.0f", range: [0, maxTop * 1.3] },
+    xaxis: { title: "EUR", tickformat: ",.0f", range: [0, maxTop * 1.45] },
     yaxis: { automargin: true, tickfont: { size: 10 } },
     bargap: 0.35,
     paper_bgcolor: "rgba(0,0,0,0)",
@@ -490,14 +490,15 @@ function renderCharts(records, suffix, interactive) {
   });
 
   Plotly.react("chart-category-stack-static", stackTraces, {
-    height: 420,
+    height: 530,
     barmode: "stack",
-    margin: { t: 20, l: 90, r: 40, b: 60 },
-    yaxis: { title: "Percent of Sales", tickformat: ".0%", automargin: true },
+    bargap: 0.4,
+    margin: { t: 30, l: 50, r: 50, b: 120 },
+    yaxis: { tickformat: ".0%", automargin: true },
     uniformtext: { minsize: 9, mode: "show" },
     paper_bgcolor: "rgba(0,0,0,0)",
     plot_bgcolor: "rgba(0,0,0,0)",
-    legend: { x: 0.98, y: -0.12, xanchor: "right", yanchor: "top", orientation: "h" }
+    legend: { x: 0.5, y: -0.12, xanchor: "center", yanchor: "top", orientation: "h", font: { size: 11 } }
   }, config);
 
   renderCategoryMixTable(categories, yearTypes, totalsByYear, records);
@@ -518,8 +519,8 @@ function renderCharts(records, suffix, interactive) {
       cliponaxis: false
     }], {
       height: 420,
-      margin: { t: 20, l: 270, r: 120, b: 40 },
-      xaxis: { title: "EUR", tickformat: ",.0f", tickangle: 0, range: rangeMode === "positive" ? [0, maxAbs * 1.25] : [minNeg * 1.25, 0] },
+      margin: { t: 20, l: 270, r: 140, b: 40 },
+      xaxis: { title: "EUR", tickformat: ",.0f", tickangle: 0, range: rangeMode === "positive" ? [0, maxAbs * 1.45] : [minNeg * 1.45, 0] },
       yaxis: { automargin: true, tickfont: { size: 10 } },
       bargap: 0.35,
       paper_bgcolor: "rgba(0,0,0,0)",
@@ -1094,6 +1095,7 @@ function renderMonthlyView() {
   if (!topCustomers.length) {
     renderNoData("chart-monthly-top-customer", "No 2026 actual data for this month");
   } else {
+    const maxTopCustomer = Math.max(...topCustomers.map((d) => d.value), 1);
     Plotly.react("chart-monthly-top-customer", [{
       x: topCustomers.map((d) => d.value).reverse(),
       y: topCustomers.map((d) => d.name).reverse(),
@@ -1103,11 +1105,11 @@ function renderMonthlyView() {
       text: topCustomers.map((d) => d.value).reverse(),
       texttemplate: "%{text:,.0f}",
       textposition: "outside",
-      cliponaxis: false
+      cliponaxis: true
     }], {
       height: 420,
-      margin: { t: 20, l: 220, r: 100, b: 40 },
-      xaxis: { tickformat: ",.0f" },
+      margin: { t: 20, l: 220, r: 120, b: 40 },
+      xaxis: { tickformat: ",.0f", range: [0, maxTopCustomer * 1.45] },
       yaxis: { automargin: true, tickfont: { size: 10 } },
       annotations: [{
         x: 0,
@@ -1277,6 +1279,7 @@ function renderMonthlyView() {
   if (!topCustomersYtd.length) {
     renderNoData("chart-monthly-top-customer-ytd", "No 2026 YTD data for this month");
   } else {
+    const maxTopCustomerYtd = Math.max(...topCustomersYtd.map((d) => d.value), 1);
     Plotly.react("chart-monthly-top-customer-ytd", [{
       x: topCustomersYtd.map((d) => d.value).reverse(),
       y: topCustomersYtd.map((d) => d.name).reverse(),
@@ -1286,11 +1289,11 @@ function renderMonthlyView() {
       text: topCustomersYtd.map((d) => d.value).reverse(),
       texttemplate: "%{text:,.0f}",
       textposition: "outside",
-      cliponaxis: false
+      cliponaxis: true
     }], {
       height: 420,
-      margin: { t: 20, l: 220, r: 100, b: 40 },
-      xaxis: { tickformat: ",.0f" },
+      margin: { t: 20, l: 220, r: 120, b: 40 },
+      xaxis: { tickformat: ",.0f", range: [0, maxTopCustomerYtd * 1.45] },
       yaxis: { automargin: true, tickfont: { size: 10 } },
       annotations: [{
         x: 0,
@@ -1512,11 +1515,11 @@ function renderMonthlyView() {
       textposition: textPositions,
       insidetextanchor: useInside ? "middle" : undefined,
       textfont: textFonts,
-      cliponaxis: false
+      cliponaxis: true
     }], {
       height: 420,
-      margin: { t: 20, l: 220, r: 80, b: 40 },
-      xaxis: { tickformat: ",.0f", range: useAlignedOutside ? [minVal * 1.25, labelX + pad] : undefined },
+      margin: { t: 20, l: 220, r: 130, b: 40 },
+      xaxis: { tickformat: ",.0f", range: useAlignedOutside ? [minVal * 1.4, labelX + pad * 2] : (maxVal > 0 ? [Math.min(minVal * 1.45, 0), maxVal * 1.45] : [minVal * 1.45, Math.max(maxVal * 1.45, 0)]) },
       yaxis: { automargin: true, tickfont: { size: 10 } },
       annotations,
       paper_bgcolor: "rgba(0,0,0,0)",
@@ -1571,14 +1574,15 @@ function renderMonthlyView() {
       };
     });
     Plotly.react("chart-monthly-category-mix-ytd", stackTraces, {
-      height: 420,
+      height: 530,
       barmode: "stack",
-      margin: { t: 20, l: 70, r: 30, b: 50 },
-      yaxis: { title: "Percent of Sales", tickformat: ".0%", automargin: true },
+      bargap: 0.4,
+      margin: { t: 30, l: 50, r: 50, b: 120 },
+      yaxis: { tickformat: ".0%", automargin: true },
       uniformtext: { minsize: 9, mode: "show" },
       paper_bgcolor: "rgba(0,0,0,0)",
       plot_bgcolor: "rgba(0,0,0,0)",
-      legend: { x: 0.6, y: -0.12, xanchor: "center", yanchor: "top", orientation: "h" }
+      legend: { x: 0.5, y: -0.12, xanchor: "center", yanchor: "top", orientation: "h", font: { size: 11 } }
     }, config);
   }
 
